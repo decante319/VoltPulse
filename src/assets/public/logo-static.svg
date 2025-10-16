@@ -1,0 +1,10 @@
+<svg width="512" height="512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="voltGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#00FF88"/>
+      <stop offset="100%" stop-color="#00BFFF"/>
+    </linearGradient>
+  </defs>
+  <circle cx="256" cy="256" r="180" fill="none" stroke="url(#voltGrad)" stroke-width="18"/>
+  <path d="M276 96 L176 286 H246 L226 416 L336 226 H266 Z" fill="url(#voltGrad)"/>
+</svg>
