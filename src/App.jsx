@@ -1,3 +1,4 @@
+import React from "react";
 import { Routes, Route, NavLink } from "react-router-dom";
 import Landing from "./pages/Landing.jsx";
 import Dashboard from "./pages/Dashboard.jsx";
