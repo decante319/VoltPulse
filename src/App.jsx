@@ -8,7 +8,8 @@ import logo from "./assets/logo-animated.svg";
 import "./index.css";
 
 function Nav() {
-  const link = "px-3 py-2 rounded-xl text-vp_text/80 hover:text-vp_text hover:bg-white/5 transition";
+  const link =
+    "px-3 py-2 rounded-xl text-vp_text/80 hover:text-vp_text hover:bg-white/5 transition";
   const active = "text-vp_text bg-white/10";
   return (
     <nav className="sticky top-0 z-50 bg-vp_bg/80 backdrop-blur border-b border-white/5">
@@ -20,10 +21,30 @@ function Nav() {
           </span>
         </a>
         <div className="flex gap-1 text-sm">
-          <NavLink to="/" className={({isActive})=> `${link} ${isActive?active:""}`}>Home</NavLink>
-          <NavLink to="/dashboard" className={({isActive})=> `${link} ${isActive?active:""}`}>Dashboard</NavLink>
-          <NavLink to="/guardian" className={({isActive})=> `${link} ${isActive?active:""}`}>Energy Guardian</NavLink>
-          <NavLink to="/about" className={({isActive})=> `${link} ${isActive?active:""}`}>About</NavLink>
+          <NavLink
+            to="/"
+            className={({ isActive }) => `${link} ${isActive ? active : ""}`}
+          >
+            Home
+          </NavLink>
+          <NavLink
+            to="/dashboard"
+            className={({ isActive }) => `${link} ${isActive ? active : ""}`}
+          >
+            Dashboard
+          </NavLink>
+          <NavLink
+            to="/guardian"
+            className={({ isActive }) => `${link} ${isActive ? active : ""}`}
+          >
+            Energy Guardian
+          </NavLink>
+          <NavLink
+            to="/about"
+            className={({ isActive }) => `${link} ${isActive ? active : ""}`}
+          >
+            About
+          </NavLink>
         </div>
       </div>
     </nav>
