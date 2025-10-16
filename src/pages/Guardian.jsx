@@ -1,6 +1,5 @@
-import React from "react";
+import React, { useState } from "react";
 
-import { useState } from "react";
 
 const tips = {
   low_battery: "Battery is low. Suggest switching to priority loads only and scheduling non-critical tasks for daytime.",
