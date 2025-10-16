@@ -1,0 +1,33 @@
+<svg width="512" height="512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="voltGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#00FF88"/>
+      <stop offset="100%" stop-color="#00BFFF"/>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3.5" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <style>
+      .ring { fill: none; stroke: url(#voltGrad); stroke-width: 18; opacity: .95; }
+      .motif { fill: none; stroke: #FFD700; stroke-width: 3; opacity:.35 }
+      .bolt { fill: url(#voltGrad); filter: url(#glow); }
+      .pulse { fill: none; stroke: #00FF88; stroke-width: 8; stroke-linecap: round; stroke-linejoin: round;
+               filter: url(#glow); stroke-dasharray: 900; stroke-dashoffset: 900;
+               animation: draw 2.2s ease-in-out infinite; }
+      @keyframes draw {
+        0% { stroke-dashoffset: 900; opacity:.2; }
+        45% { stroke-dashoffset: 450; opacity:1; }
+        100% { stroke-dashoffset: 0; opacity:.2; }
+      }
+    </style>
+  </defs>
+
+  <circle cx="256" cy="256" r="180" class="ring"/>
+  <path d="M136 256h40l20-20 20 20 20-20 20 20 20-20 20 20h40" class="motif"/>
+  <path class="pulse" d="M96 256 H176 L196 226 L216 286 L236 256 H276 L296 216 L316 276 L336 256 H416"/>
+  <path class="bolt" d="M276 96 L176 286 H246 L226 416 L336 226 H266 Z"/>
+</svg>
