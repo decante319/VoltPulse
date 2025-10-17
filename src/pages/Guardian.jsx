@@ -4,10 +4,12 @@ import { useEnergy } from "../EnergyContext";
 export default function Guardian() {
   const { solar, battery, load, risk, hour } = useEnergy();
   const [logs, setLogs] = useState([]);
+  const [heartbeatTimer, setHeartbeatTimer] = useState(0);
 
-  // --- AI decision logic ---
   useEffect(() => {
     const newMessages = [];
+
+    // 🔍 Smart alerts — only when thresholds are crossed
     if (solar < 20 && hour >= 18) {
       newMessages.push("🌙 Night detected. Switching to battery reserve mode.");
     }
@@ -21,15 +23,34 @@ export default function Guardian() {
       newMessages.push("⚡ High demand detected. Prioritizing essential loads.");
     }
 
+    const timestamp = new Date().toLocaleTimeString();
+
+    // 💬 Add event-based logs
     if (newMessages.length > 0) {
-      const timestamp = new Date().toLocaleTimeString();
       const formatted = newMessages.map((msg) => ({
         text: msg,
         time: timestamp,
       }));
       setLogs((prev) => [...formatted, ...prev.slice(0, 8)]);
+      setHeartbeatTimer(0); // reset heartbeat timer on active alert
+    } else {
+      // ⏱️ Heartbeat every ~15 seconds
+      setHeartbeatTimer((prev) => prev + 1);
+      if (heartbeatTimer >= 7) {
+        const stableMsg =
+          risk === "HIGH"
+            ? "⚠️ Monitoring critical load levels..."
+            : risk === "MEDIUM"
+            ? "🟡 Systems stable but under moderate load."
+            : "🟢 Monitoring... all systems nominal.";
+        setLogs((prev) => [
+          { text: stableMsg, time: timestamp },
+          ...prev.slice(0, 8),
+        ]);
+        setHeartbeatTimer(0);
+      }
     }
-  }, [solar, battery, load, risk]);
+  }, [solar, battery, load, risk, hour, heartbeatTimer]);
 
   return (
     <section className="max-w-5xl mx-auto px-4 py-10 space-y-6">
@@ -38,6 +59,7 @@ export default function Guardian() {
       </h2>
       <GuardianSummary battery={battery} risk={risk} />
 
+      {/* Stat cards */}
       <div className="grid sm:grid-cols-4 gap-4">
         <Stat label="Solar Input" value={solar.toFixed(0)} unit="%" />
         <Stat label="Battery" value={battery.toFixed(0)} unit="%" />
@@ -45,6 +67,7 @@ export default function Guardian() {
         <Stat label="Risk" value={risk} color={riskColor(risk)} />
       </div>
 
+      {/* Guardian Feed */}
       <div className="p-5 rounded-2xl border border-white/10 bg-white/5">
         <h3 className="text-sm font-semibold text-white/70 mb-3">
           Guardian Activity Feed
@@ -84,7 +107,9 @@ function GuardianSummary({ battery, risk }) {
   return (
     <div className="p-4 bg-white/5 border border-white/10 rounded-2xl flex items-center justify-between text-white/80">
       <p>{status}</p>
-      <p className="text-vp_green font-semibold">Battery: {battery.toFixed(0)}%</p>
+      <p className="text-vp_green font-semibold">
+        Battery: {battery.toFixed(0)}%
+      </p>
     </div>
   );
 }
