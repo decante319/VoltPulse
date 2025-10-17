@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import { Routes, Route, NavLink } from "react-router-dom";
 import Landing from "./pages/Landing.jsx";
 import Dashboard from "./pages/Dashboard.jsx";
 import Guardian from "./pages/Guardian.jsx";
 import About from "./pages/About.jsx";
+import Loading from "./pages/Loading.jsx";
 import logo from "./assets/logo-animated.svg";
 import "./index.css";
 import { EnergyProvider } from "./EnergyContext.jsx";
@@ -53,22 +54,28 @@ function Nav() {
 }
 
 export default function App() {
+  const [loading, setLoading] = useState(true);
+
   return (
     <EnergyProvider>
-      <div className="min-h-screen bg-vp_bg text-vp_text">
-        <Nav />
-        <Routes>
-          <Route path="/" element={<Landing />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/guardian" element={<Guardian />} />
-          <Route path="/about" element={<About />} />
-        </Routes>
-        <footer className="border-t border-white/5 mt-12">
-          <div className="max-w-5xl mx-auto p-6 text-xs text-white/50">
-            Built by Team Neural Nexus • VoltPulse — “Energy with a heartbeat.”
-          </div>
-        </footer>
-      </div>
+      {loading ? (
+        <Loading onFinish={() => setLoading(false)} />
+      ) : (
+        <div className="min-h-screen bg-vp_bg text-vp_text">
+          <Nav />
+          <Routes>
+            <Route path="/" element={<Landing />} />
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/guardian" element={<Guardian />} />
+            <Route path="/about" element={<About />} />
+          </Routes>
+          <footer className="border-t border-white/5 mt-12">
+            <div className="max-w-5xl mx-auto p-6 text-xs text-white/50">
+              Built by Team Neural Nexus • VoltPulse — “Energy with a heartbeat.”
+            </div>
+          </footer>
+        </div>
+      )}
     </EnergyProvider>
   );
 }
